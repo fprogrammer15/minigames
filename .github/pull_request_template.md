@@ -1,35 +1,11 @@
-## Task
+1. Task: <!-- link to the task -->
+2. Screenshot:
+   <!-- drag & drop a screenshot of the result -->
+3. Deployment: <!-- deployed link -->
+4. Done DD.MM.YYYY / deadline DD.MM.YYYY
+5. Score: XXX / 294
 
-<!-- Link to the task -->
+<!-- self-check: list of completed tasks with scores -->
 
-## Screenshot
-
-<!-- Drag & drop a screenshot of the result -->
-
-## Deployment
-
-<!-- Deployed link -->
-
-## Dates
-
-Done DD.MM.YYYY / deadline DD.MM.YYYY
-
-## Self-check
-
-<!-- Expected score and why -->
-
-Score: XXX / 294
-
-## Changes
-
-<!-- What was done in this PR and why -->
-
--
-
-## Checklist
-
-- [ ] `npm run lint` passes
-- [ ] `npm run format:check` passes
-- [ ] `npm run build` passes
-- [ ] No `console.log`
-- [ ] No `any`
+- Section name (XX/XX)
+  - [ ] task (XX)
