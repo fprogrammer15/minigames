@@ -9,4 +9,3 @@
 
 - Section name (XX/XX)
   - [ ] task (XX)
-a
