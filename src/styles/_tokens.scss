@@ -55,6 +55,8 @@ $card-info-threshold: 288px;
     // Colors: overlays (not in the guidebook)
     --color-backdrop: rgb(30 27 58 / 60%);
     --color-hero-overlay: rgb(30 27 58 / 65%);
+    --color-tab-hover: rgb(255 249 229 / 60%);
+    --color-divider: rgb(36 33 69 / 20%);
     --gradient-card-info: linear-gradient(to bottom, transparent, rgb(0 0 0 / 80%));
 
     // Font families
@@ -134,6 +136,7 @@ $card-info-threshold: 288px;
     --shadow-level-3: 8px 8px 0 var(--color-on-primary);
     --shadow-soft: 0 14px 30px rgb(0 0 0 / 8%), 0 2px 8px rgb(0 0 0 / 4%);
     --shadow-soft-button: 0 10px 20px rgb(0 0 0 / 10%);
+    --shadow-pressable: 0 var(--size-05) 0 var(--color-on-primary);
 
     // Layout (desktop values, smaller screens are below)
     --layout-max-width: #{$breakpoint-desktop};
@@ -160,6 +163,7 @@ $card-info-threshold: 288px;
 
     // Interaction states
     --scale-pressed: 0.97;
+    --scale-dialog-hidden: 0.95;
     --opacity-hover: 0.8;
     --opacity-disabled: 0.5;
     --opacity-hero-image: 0.2;
