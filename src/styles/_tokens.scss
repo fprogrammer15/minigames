@@ -54,6 +54,8 @@ $card-info-threshold: 288px;
 
     // Colors: overlays (not in the guidebook)
     --color-backdrop: rgb(30 27 58 / 60%);
+    --color-hero-overlay: rgb(30 27 58 / 65%);
+    --gradient-card-info: linear-gradient(to bottom, transparent, rgb(0 0 0 / 80%));
 
     // Font families
     --font-family-primary: 'Inter', system-ui, sans-serif;
@@ -115,7 +117,10 @@ $card-info-threshold: 288px;
 
     // Borders
     --border-width: 1px;
+    --border-width-medium: 1.5px;
     --border-width-bold: 2px;
+    --border-width-card: 2.5px;
+    --border-width-thick: 3px;
     --underline-width: 1.5px;
 
     // Icon sizes
@@ -127,6 +132,8 @@ $card-info-threshold: 288px;
     --shadow-level-1: 4px 4px 0 var(--color-on-primary);
     --shadow-level-2: 6px 6px 0 var(--color-on-primary);
     --shadow-level-3: 8px 8px 0 var(--color-on-primary);
+    --shadow-soft: 0 14px 30px rgb(0 0 0 / 8%), 0 2px 8px rgb(0 0 0 / 4%);
+    --shadow-soft-button: 0 10px 20px rgb(0 0 0 / 10%);
 
     // Layout (desktop values, smaller screens are below)
     --layout-max-width: #{$breakpoint-desktop};
@@ -137,6 +144,9 @@ $card-info-threshold: 288px;
     --header-padding-block: var(--size-3);
     --header-height: 85px;
     --dialog-width: 420px;
+    --hero-box-width: 640px;
+    --slider-height: 384px;
+    --developer-image-height: 483px;
 
     // Layers
     --z-menu: 1;
@@ -152,9 +162,11 @@ $card-info-threshold: 288px;
     --scale-pressed: 0.97;
     --opacity-hover: 0.8;
     --opacity-disabled: 0.5;
+    --opacity-hero-image: 0.2;
 
     // Line heights
     --line-height-body: 1.5;
+    --line-height-heading: 1.1;
   }
 
   // Layout tokens for smaller screens
@@ -173,6 +185,9 @@ $card-info-threshold: 288px;
       --header-padding-inline: var(--size-5);
       --header-padding-block: var(--size-2);
       --header-height: var(--size-9);
+      --hero-box-width: 480px;
+      --slider-height: 280px;
+      --developer-image-height: 300px;
     }
   }
 
@@ -183,6 +198,9 @@ $card-info-threshold: 288px;
       --section-gap: var(--size-2);
       --header-padding-inline: var(--size-2);
       --header-height: var(--size-8);
+      --hero-box-width: 100%;
+      --slider-height: 200px;
+      --developer-image-height: 227px;
     }
   }
 }
