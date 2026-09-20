@@ -1,12 +1,14 @@
+import { createFooter } from '../components/footer/footer';
+import { createHeader } from '../components/header/header';
 import { renderHomePage } from '../pages/home/home-page';
 import { AppRoute } from '../types/routes';
-import { createElement } from '../utils/dom';
+import { html } from '../utils/dom';
 import { Router } from './router';
 
 export function initApp(): void {
-  const main = createElement('main', { className: 'main' });
+  const main = html('<main class="main"></main>');
 
-  document.body.append(main);
+  document.body.append(createHeader(), main, createFooter());
 
   const router = new Router(main);
 

@@ -1,29 +1,36 @@
 @use 'tokens' as *;
 
-// ---------- Media queries ----------
+// Media queries (desktop styles are the default)
 
-// <= 768px: tablet layout, burger menu zone
+// <= 1100px: compact desktop. Use it before tablet-down and mobile
+@mixin compact-down {
+  @media (max-width: $breakpoint-desktop-compact) {
+    @content;
+  }
+}
+
+// <= 768px: tablet, burger menu
 @mixin tablet-down {
   @media (max-width: $breakpoint-tablet) {
     @content;
   }
 }
 
-// <= 600px: mobile layout
+// <= 600px: mobile
 @mixin mobile {
   @media (max-width: $breakpoint-mobile-layout) {
     @content;
   }
 }
 
-// > 768px: desktop only
+// > 768px: desktop
 @mixin desktop {
   @media (min-width: ($breakpoint-tablet + 1px)) {
     @content;
   }
 }
 
-// Hover only on devices that support it (no sticky hover on touch screens)
+// Hover only for a mouse, so it does not stick on touch screens
 @mixin hover {
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -32,9 +39,8 @@
   }
 }
 
-// ---------- Layout ----------
-// Full-width section content: side padding from tokens,
-// stops growing at 1920px and stays centered on wider screens.
+// Layout
+// Section content: side padding, max width 1920px, centered
 @mixin container {
   width: 100%;
   max-width: var(--layout-max-width);
@@ -48,7 +54,7 @@
   justify-content: center;
 }
 
-// ---------- Helpers ----------
+// Helpers
 @mixin button-reset {
   padding: 0;
   border: none;

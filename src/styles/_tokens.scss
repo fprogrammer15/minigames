@@ -1,18 +1,20 @@
 @use 'functions' as *;
 
-// ---------- Breakpoints (Sass variables: usable inside media queries) ----------
+// Breakpoints (Sass variables, because CSS variables do not work in media queries)
 $breakpoint-mobile: 375px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1920px;
 
-// The design has no frame between 375 and 768:
+// No mockup between 375 and 768: mobile layout up to this width, tablet above
 $breakpoint-mobile-layout: 600px;
 
-// Slider card shows the info overlay starting from this card width (container query)
+// Below this width the desktop header does not fit, so paddings and gaps get smaller
+$breakpoint-desktop-compact: 1100px;
+
+// Slider card shows its info block from this card width
 $card-info-threshold: 288px;
 
-// ---------- Design tokens (CSS custom properties) ----------
-// Emitted once from main.scss via `@include root-tokens`.
+// Design tokens. main.scss includes this mixin once
 @mixin root-tokens {
   :root {
     // Colors: base
@@ -50,7 +52,7 @@ $card-info-threshold: 288px;
     --color-avatar-random-4: #ffc6ff;
     --color-avatar-random-5: #e8dff5;
 
-    // Colors: overlays (not in the guidebook, chosen by the developer)
+    // Colors: overlays (not in the guidebook)
     --color-backdrop: rgb(30 27 58 / 60%);
 
     // Font families
@@ -114,28 +116,73 @@ $card-info-threshold: 288px;
     // Borders
     --border-width: 1px;
     --border-width-bold: 2px;
+    --underline-width: 1.5px;
+
+    // Icon sizes
+    --icon-size-small: var(--size-2);
+    --icon-size-medium: 20px;
+    --icon-size-large: var(--size-3);
 
     // Shadows
     --shadow-level-1: 4px 4px 0 var(--color-on-primary);
     --shadow-level-2: 6px 6px 0 var(--color-on-primary);
     --shadow-level-3: 8px 8px 0 var(--color-on-primary);
 
-    // Layout (desktop values; overridden for tablet and mobile in _globals.scss)
+    // Layout (desktop values, smaller screens are below)
     --layout-max-width: #{$breakpoint-desktop};
     --section-padding-inline: var(--size-15);
     --section-padding-block: var(--size-5);
     --section-gap: var(--size-5);
     --header-padding-inline: var(--size-10);
     --header-padding-block: var(--size-3);
+    --header-height: 85px;
     --dialog-width: 420px;
 
     // Layers
+    --z-menu: 1;
+    --z-menu-toggle: 2;
     --z-header: 100;
-    --z-menu: 200;
     --z-dialog: 300;
 
     // Motion
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
+
+    // Interaction states
+    --scale-pressed: 0.97;
+    --opacity-hover: 0.8;
+    --opacity-disabled: 0.5;
+
+    // Line heights
+    --line-height-body: 1.5;
+  }
+
+  // Layout tokens for smaller screens
+  @media (max-width: $breakpoint-desktop-compact) {
+    :root {
+      --section-padding-inline: var(--size-8);
+      --header-padding-inline: var(--size-5);
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    :root {
+      --section-padding-inline: var(--size-5);
+      --section-padding-block: var(--size-3);
+      --section-gap: var(--size-3);
+      --header-padding-inline: var(--size-5);
+      --header-padding-block: var(--size-2);
+      --header-height: var(--size-9);
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile-layout) {
+    :root {
+      --section-padding-inline: var(--size-2);
+      --section-padding-block: var(--size-2);
+      --section-gap: var(--size-2);
+      --header-padding-inline: var(--size-2);
+      --header-height: var(--size-8);
+    }
   }
 }

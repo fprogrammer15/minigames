@@ -1,7 +1,9 @@
-import { createElement } from '../../utils/dom';
+import { html } from '../../utils/dom';
 
 export function renderHomePage(): HTMLElement {
-  return createElement('div', { className: 'home' }, [
-    createElement('h1', { className: 'home__title', text: 'MiniGames' }),
-  ]);
+  return html(`
+    <div class="home">
+      <h1 class="home__title">MiniGames</h1>
+    </div>
+  `);
 }
