@@ -1,0 +1,29 @@
+@use '../../styles/mixins' as *;
+
+@mixin show-short {
+  .responsive-text__full {
+    display: none;
+  }
+
+  .responsive-text__short {
+    display: inline;
+  }
+}
+
+.responsive-text {
+  &__short {
+    display: none;
+  }
+
+  &--tablet {
+    @include tablet-down {
+      @include show-short;
+    }
+  }
+
+  &--mobile {
+    @include mobile {
+      @include show-short;
+    }
+  }
+}

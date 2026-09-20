@@ -1,0 +1,113 @@
+@use '../../styles/mixins' as *;
+
+// figma: image and card widths on desktop, used as proportions
+$columns-desktop: 682fr 958fr;
+
+.developer {
+  background-color: var(--color-surface);
+
+  &__container {
+    @include container;
+
+    display: grid;
+    grid-template-columns: $columns-desktop;
+    gap: var(--section-gap);
+    align-items: center;
+    padding-block: var(--section-padding-block);
+
+    @include tablet-down {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: var(--developer-image-height);
+    border-radius: var(--corner-extra-large);
+    object-fit: cover;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    align-items: flex-start;
+    // figma: the border is inside the card, so the padding is smaller by its width
+    padding: calc(var(--size-5) - var(--border-width-bold));
+    border: var(--border-width-bold) solid var(--color-on-primary);
+    border-radius: var(--corner-extra-large);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-soft);
+
+    @include tablet-down {
+      gap: var(--size-2);
+      padding: calc(var(--size-4) - var(--border-width-bold));
+    }
+
+    @include mobile {
+      padding: calc(var(--size-3) - var(--border-width-bold));
+    }
+  }
+
+  &__title {
+    font-size: var(--font-size-headline-large);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+
+    @include tablet-down {
+      font-size: var(--font-size-headline-medium);
+    }
+  }
+
+  &__text {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-body);
+
+    @include tablet-down {
+      font-size: var(--font-size-body-small);
+    }
+
+    @include mobile {
+      font-size: var(--font-size-label-medium);
+    }
+  }
+
+  // Two classes to override the base .button styles
+  &__card &__button {
+    gap: var(--size-1);
+    border-radius: var(--corner-medium);
+    font-family: var(--font-family-secondary);
+    box-shadow:
+      inset 0 0 0 var(--border-width-bold) var(--button-border-color),
+      var(--shadow-soft-button);
+
+    @include tablet-down {
+      padding: var(--btn-medium-padding);
+      font-size: var(--font-size-label-large);
+    }
+
+    @include mobile {
+      padding: var(--btn-small-padding);
+      font-size: var(--font-size-label-medium);
+    }
+  }
+
+  &__button &__button-icon {
+    width: var(--icon-size-large);
+    height: var(--icon-size-large);
+
+    @include tablet-down {
+      width: var(--icon-size-small);
+      height: var(--icon-size-small);
+    }
+  }
+
+  &__note {
+    font-size: var(--font-size-body-small);
+    color: var(--color-on-bg-low);
+
+    @include tablet-down {
+      font-size: var(--font-size-label-medium);
+    }
+  }
+}
