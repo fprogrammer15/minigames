@@ -1,0 +1,74 @@
+@use 'tokens' as *;
+
+// ---------- Media queries ----------
+
+// <= 768px: tablet layout, burger menu zone
+@mixin tablet-down {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+// <= 600px: mobile layout
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile-layout) {
+    @content;
+  }
+}
+
+// > 768px: desktop only
+@mixin desktop {
+  @media (min-width: ($breakpoint-tablet + 1px)) {
+    @content;
+  }
+}
+
+// Hover only on devices that support it (no sticky hover on touch screens)
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// ---------- Layout ----------
+// Full-width section content: side padding from tokens,
+// stops growing at 1920px and stays centered on wider screens.
+@mixin container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-inline);
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ---------- Helpers ----------
+@mixin button-reset {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
