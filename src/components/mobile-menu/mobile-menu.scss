@@ -1,0 +1,91 @@
+@use '../../styles/mixins' as *;
+
+// The menu is inside the header, so the burger button can stay above it
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  display: none;
+  flex-direction: column;
+  gap: var(--size-4);
+  padding-bottom: var(--size-3);
+  overflow-y: auto;
+  color: var(--color-on-bg-footer);
+  background-color: var(--color-bg-footer);
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition:
+    transform var(--transition-base),
+    visibility var(--transition-base);
+
+  @include tablet-down {
+    display: flex;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &.is-open {
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  // Same size as the header row, so the logo does not move
+  &__top {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    min-height: var(--header-height);
+    padding-inline: var(--header-padding-inline);
+  }
+
+  &__nav,
+  &__actions {
+    padding-inline: var(--header-padding-inline);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    align-items: flex-start;
+  }
+
+  &__link {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-medium);
+    text-decoration: underline transparent;
+    text-decoration-thickness: var(--underline-width);
+    text-underline-offset: var(--size-05);
+    cursor: pointer;
+    transition:
+      color var(--transition-fast),
+      text-decoration-color var(--transition-fast);
+
+    @include hover {
+      color: var(--color-primary);
+      text-decoration-color: var(--color-primary);
+    }
+
+    &:active {
+      color: var(--color-primary);
+    }
+
+    &--current {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    margin-top: auto;
+  }
+
+  &__button {
+    width: 100%;
+  }
+}

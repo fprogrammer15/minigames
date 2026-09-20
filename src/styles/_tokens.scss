@@ -1,0 +1,210 @@
+@use 'functions' as *;
+
+// Breakpoints (Sass variables, because CSS variables do not work in media queries)
+$breakpoint-mobile: 375px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1920px;
+
+// No mockup between 375 and 768: mobile layout up to this width, tablet above
+$breakpoint-mobile-layout: 600px;
+
+// Below this width the desktop header does not fit, so paddings and gaps get smaller
+$breakpoint-desktop-compact: 1100px;
+
+// Slider card shows its info block from this card width
+$card-info-threshold: 288px;
+
+// Design tokens. main.scss includes this mixin once
+@mixin root-tokens {
+  :root {
+    // Colors: base
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    // Colors: general
+    --color-bg: #f9f8f3;
+    --color-on-bg: #5f5d75;
+    --color-on-bg-low: #737380;
+    --color-bg-footer: #1e1b3a;
+    --color-bg-footer-low: #2a264f;
+    --color-bg-footer-lowest: #3c376e;
+    --color-on-bg-footer: #b9b5c9;
+    --color-surface: #fff9e5;
+    --color-surface-low: #fffcf5;
+    --color-primary: #ffd02b;
+    --color-primary-low: #fde047;
+    --color-primary-high: #e5bb00;
+    --color-on-primary: #242145;
+    --color-secondary: #f0eeff;
+    --color-tertiary: #3a2ebf;
+    --color-like: #ff4b4b;
+    --color-error: #b3261e;
+    --color-price-free: #0b8a8f;
+
+    // Colors: borders
+    --color-outline: #e5e7eb;
+    --color-outline-variant: #d2d2d2;
+
+    // Colors: avatar backgrounds
+    --color-avatar-random-1: #e9eef6;
+    --color-avatar-random-2: #a3e2c9;
+    --color-avatar-random-3: #bce3ff;
+    --color-avatar-random-4: #ffc6ff;
+    --color-avatar-random-5: #e8dff5;
+
+    // Colors: overlays (not in the guidebook)
+    --color-backdrop: rgb(30 27 58 / 60%);
+    --color-hero-overlay: rgb(30 27 58 / 65%);
+    --color-tab-hover: rgb(255 249 229 / 60%);
+    --color-divider: rgb(36 33 69 / 20%);
+    --gradient-card-info: linear-gradient(to bottom, transparent, rgb(0 0 0 / 80%));
+
+    // Font families
+    --font-family-primary: 'Inter', system-ui, sans-serif;
+    --font-family-secondary: 'Roboto', system-ui, sans-serif;
+
+    // Font sizes
+    --font-size-display-large: #{to-rem(56px)};
+    --font-size-display-medium: #{to-rem(36px)};
+    --font-size-display-small: #{to-rem(24px)};
+    --font-size-headline-large: #{to-rem(32px)};
+    --font-size-headline-medium: #{to-rem(24px)};
+    --font-size-headline-small: #{to-rem(20px)};
+    --font-size-body-large: #{to-rem(18px)};
+    --font-size-body-medium: #{to-rem(16px)};
+    --font-size-body-small: #{to-rem(14px)};
+    --font-size-label-extra-large: #{to-rem(16px)};
+    --font-size-label-large: #{to-rem(14px)};
+    --font-size-label-medium: #{to-rem(12px)};
+    --font-size-label-small: #{to-rem(10px)};
+
+    // Font weights
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600; // Roboto 600 is used in the mockup, not listed in the guidebook
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+
+    // Sizes (spacing scale)
+    --size-05: 4px;
+    --size-1: 8px;
+    --size-2: 16px;
+    --size-3: 24px;
+    --size-4: 32px;
+    --size-5: 40px;
+    --size-6: 48px;
+    --size-7: 56px;
+    --size-8: 64px;
+    --size-9: 72px;
+    --size-10: 80px;
+    --size-11: 88px;
+    --size-12: 96px;
+    --size-13: 104px;
+    --size-14: 112px;
+    --size-15: 120px;
+
+    // Corner radii
+    --corner-extra-small: 4px;
+    --corner-small: 8px;
+    --corner-medium: 12px;
+    --corner-large: 16px;
+    --corner-extra-large: 24px;
+    --corner-full: 9999px;
+
+    // Button sizes (padding: block inline)
+    --btn-large-padding: var(--size-2) var(--size-3);
+    --btn-medium-padding: 10px 20px;
+    --btn-small-padding: var(--size-1) var(--size-2);
+    --btn-icon-padding: var(--size-1);
+
+    // Borders
+    --border-width: 1px;
+    --border-width-medium: 1.5px;
+    --border-width-bold: 2px;
+    --border-width-card: 2.5px;
+    --border-width-thick: 3px;
+    --underline-width: 1.5px;
+
+    // Icon sizes
+    --icon-size-small: var(--size-2);
+    --icon-size-medium: 20px;
+    --icon-size-large: var(--size-3);
+
+    // Shadows
+    --shadow-level-1: 4px 4px 0 var(--color-on-primary);
+    --shadow-level-2: 6px 6px 0 var(--color-on-primary);
+    --shadow-level-3: 8px 8px 0 var(--color-on-primary);
+    --shadow-soft: 0 14px 30px rgb(0 0 0 / 8%), 0 2px 8px rgb(0 0 0 / 4%);
+    --shadow-soft-button: 0 10px 20px rgb(0 0 0 / 10%);
+    --shadow-pressable: 0 var(--size-05) 0 var(--color-on-primary);
+
+    // Layout (desktop values, smaller screens are below)
+    --layout-max-width: #{$breakpoint-desktop};
+    --section-padding-inline: var(--size-15);
+    --section-padding-block: var(--size-5);
+    --section-gap: var(--size-5);
+    --header-padding-inline: var(--size-10);
+    --header-padding-block: var(--size-3);
+    --header-height: 85px;
+    --dialog-width: 420px;
+    --hero-box-width: 640px;
+    --slider-height: 384px;
+    --developer-image-height: 483px;
+
+    // Layers
+    --z-menu: 1;
+    --z-menu-toggle: 2;
+    --z-header: 100;
+    --z-dialog: 300;
+
+    // Motion
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+
+    // Interaction states
+    --scale-pressed: 0.97;
+    --scale-dialog-hidden: 0.95;
+    --opacity-hover: 0.8;
+    --opacity-disabled: 0.5;
+    --opacity-hero-image: 0.2;
+
+    // Line heights
+    --line-height-body: 1.5;
+    --line-height-heading: 1.1;
+  }
+
+  // Layout tokens for smaller screens
+  @media (max-width: $breakpoint-desktop-compact) {
+    :root {
+      --section-padding-inline: var(--size-8);
+      --header-padding-inline: var(--size-5);
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    :root {
+      --section-padding-inline: var(--size-5);
+      --section-padding-block: var(--size-3);
+      --section-gap: var(--size-3);
+      --header-padding-inline: var(--size-5);
+      --header-padding-block: var(--size-2);
+      --header-height: var(--size-9);
+      --hero-box-width: 480px;
+      --slider-height: 280px;
+      --developer-image-height: 300px;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile-layout) {
+    :root {
+      --section-padding-inline: var(--size-2);
+      --section-padding-block: var(--size-2);
+      --section-gap: var(--size-2);
+      --header-padding-inline: var(--size-2);
+      --header-height: var(--size-8);
+      --hero-box-width: 100%;
+      --slider-height: 200px;
+      --developer-image-height: 227px;
+    }
+  }
+}

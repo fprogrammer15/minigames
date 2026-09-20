@@ -1,0 +1,237 @@
+@use '../../styles/mixins' as *;
+
+.leaderboard {
+  &__container {
+    @include container;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+    padding-block: var(--section-padding-block);
+  }
+
+  &__card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--corner-large);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-level-2);
+
+    @include tablet-down {
+      box-shadow: var(--shadow-level-1);
+    }
+  }
+
+  // figma: the border is inside the card, so it is drawn over the table
+  &__card::after {
+    position: absolute;
+    inset: 0;
+    border: var(--border-width-card) solid var(--color-on-primary);
+    border-radius: inherit;
+    pointer-events: none;
+    content: '';
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-body-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+
+    @include tablet-down {
+      font-size: var(--font-size-body-small);
+    }
+  }
+
+  &__row {
+    border-top: var(--border-width) solid var(--color-outline);
+
+    &:nth-child(odd) {
+      background-color: var(--color-bg);
+    }
+
+    // Tablet and mobile show the top three players
+    &:nth-child(n + 4) {
+      @include tablet-down {
+        display: none;
+      }
+    }
+  }
+
+  &__cell {
+    // figma: the row border is part of the row height
+    padding: calc(var(--size-2) - var(--border-width)) var(--size-1) var(--size-2);
+    text-align: center;
+
+    @include mobile {
+      padding-inline: var(--size-05);
+    }
+
+    &:first-child {
+      padding-left: var(--size-3);
+
+      @include tablet-down {
+        padding-left: var(--size-2);
+      }
+    }
+
+    &:last-child {
+      padding-right: var(--size-3);
+    }
+
+    &--rank {
+      // figma: 80px column + cell paddings
+      width: calc(var(--size-10) + var(--size-4));
+      font-weight: var(--font-weight-extra-bold);
+
+      @include tablet-down {
+        width: var(--size-13);
+      }
+
+      @include mobile {
+        width: calc(var(--size-7) + var(--size-05));
+      }
+    }
+
+    &--player {
+      text-align: left;
+
+      @include tablet-down {
+        // figma: 160px column + cell paddings
+        width: calc(var(--size-15) + var(--size-7));
+      }
+
+      @include mobile {
+        width: auto;
+      }
+    }
+
+    &--games {
+      font-weight: var(--font-weight-semi-bold);
+
+      @include mobile {
+        display: none;
+      }
+    }
+
+    &--score {
+      @include mobile {
+        width: var(--size-10);
+      }
+    }
+
+    &--streak {
+      @include tablet-down {
+        padding-right: var(--size-2);
+      }
+
+      @include mobile {
+        width: var(--size-11);
+      }
+    }
+
+    &--favorite {
+      @include tablet-down {
+        display: none;
+      }
+    }
+  }
+
+  th#{&}__cell {
+    padding-block: var(--size-3);
+    font-weight: var(--font-weight-extra-bold);
+    color: var(--color-white);
+    text-align: center;
+    text-transform: uppercase;
+    background-color: var(--color-tertiary);
+
+    @include tablet-down {
+      padding-block: var(--size-2);
+    }
+  }
+
+  // The first place is highlighted
+  &__row:first-child &__cell--rank {
+    color: var(--color-primary);
+
+    @include tablet-down {
+      color: var(--color-tertiary);
+    }
+  }
+
+  &__player {
+    display: flex;
+    gap: calc(var(--size-1) + var(--size-05));
+    align-items: center;
+    min-width: 0;
+
+    @include tablet-down {
+      gap: var(--size-1);
+    }
+
+    @include mobile {
+      gap: var(--size-05);
+    }
+  }
+
+  &__name {
+    @include text-ellipsis;
+  }
+
+  &__avatar {
+    @include flex-center;
+
+    flex-shrink: 0;
+    width: var(--size-5);
+    height: var(--size-5);
+    border: var(--border-width-medium) solid var(--color-on-primary);
+    border-radius: var(--corner-full);
+    font-size: var(--font-size-body-small);
+    background-color: var(--color-avatar-random-1);
+
+    @include tablet-down {
+      // figma: 28px avatar
+      width: calc(var(--size-3) + var(--size-05));
+      height: calc(var(--size-3) + var(--size-05));
+      border-width: var(--border-width);
+      font-size: var(--font-size-label-small);
+    }
+
+    @include mobile {
+      width: var(--size-3);
+      height: var(--size-3);
+    }
+
+    &--1 {
+      background-color: var(--color-primary);
+    }
+
+    &--2 {
+      background-color: var(--color-avatar-random-2);
+    }
+
+    &--3 {
+      background-color: var(--color-avatar-random-3);
+    }
+
+    &--4 {
+      background-color: var(--color-avatar-random-4);
+    }
+
+    &--5 {
+      background-color: var(--color-avatar-random-5);
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: var(--size-05) calc(var(--size-1) + var(--size-05));
+    border: var(--border-width-medium) solid var(--color-on-primary);
+    border-radius: var(--corner-full);
+    font-size: var(--font-size-label-medium);
+    background-color: var(--color-bg);
+  }
+}

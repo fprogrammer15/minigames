@@ -1,0 +1,192 @@
+@use '../../styles/tokens' as *;
+@use '../../styles/mixins' as *;
+
+// figma: card widths in the track, used as proportions
+$track-desktop: 120fr 288fr 816fr 288fr 120fr;
+$track-tablet: 105fr 448fr 105fr;
+$track-mobile: 56fr 218fr 56fr;
+
+.slider {
+  &__container {
+    @include container;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+    padding-block: var(--section-padding-block);
+  }
+
+  &__header {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__controls {
+    display: flex;
+    gap: var(--size-2);
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  &__arrow {
+    @include flex-center;
+
+    width: var(--size-6);
+    height: var(--size-6);
+    padding: 0;
+    border: var(--border-width-bold) solid var(--color-on-primary);
+    border-radius: var(--corner-full);
+    color: var(--color-on-primary);
+    background-color: var(--color-white);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+
+    @include tablet-down {
+      width: var(--size-5);
+      height: var(--size-5);
+    }
+
+    @include hover {
+      background-color: var(--color-surface);
+    }
+
+    &:active {
+      transform: scale(var(--scale-pressed));
+    }
+
+    &:disabled {
+      opacity: var(--opacity-disabled);
+      cursor: not-allowed;
+    }
+
+    &--next {
+      background-color: var(--color-primary);
+
+      @include hover {
+        background-color: var(--color-primary-high);
+      }
+    }
+  }
+
+  // Two classes to override the base .icon size
+  &__arrow &__arrow-icon {
+    width: var(--icon-size-large);
+    height: var(--icon-size-large);
+
+    @include tablet-down {
+      width: var(--icon-size-medium);
+      height: var(--icon-size-medium);
+    }
+  }
+
+  &__track {
+    display: grid;
+    grid-template-columns: $track-desktop;
+    grid-template-rows: minmax(0, 1fr);
+    gap: var(--size-1);
+    height: calc(var(--slider-height) + var(--size-05));
+    // Room for the card shadows
+    padding: 0 var(--size-1) var(--size-05);
+
+    @include tablet-down {
+      grid-template-columns: $track-tablet;
+    }
+
+    @include mobile {
+      grid-template-columns: $track-mobile;
+      padding-inline: var(--size-05);
+    }
+  }
+
+  &__slide {
+    min-width: 0;
+    container-type: inline-size;
+
+    // Tablet and mobile show three cards
+    &:first-child,
+    &:last-child {
+      @include tablet-down {
+        display: none;
+      }
+    }
+  }
+}
+
+.game-card {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border: var(--border-width-card) solid var(--color-on-primary);
+  border-radius: var(--corner-extra-large);
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-level-1);
+
+  @include tablet-down {
+    border-radius: var(--corner-large);
+  }
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Hidden on narrow cards: they show only the image
+  &__info {
+    position: absolute;
+    inset: auto 0 0;
+    display: none;
+    flex-direction: column;
+    gap: var(--size-1);
+    padding: var(--size-2);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    background: var(--gradient-card-info);
+
+    @container (min-width: #{$card-info-threshold}) {
+      display: flex;
+    }
+  }
+
+  &__title {
+    @include text-ellipsis;
+
+    font-size: var(--font-size-body-large);
+  }
+
+  &__meta {
+    display: flex;
+    gap: var(--size-1);
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-body-medium);
+
+    @include tablet-down {
+      font-size: var(--font-size-body-small);
+    }
+  }
+
+  &__stat {
+    display: inline-flex;
+    gap: var(--size-05);
+    align-items: center;
+  }
+
+  &__icon {
+    &--star {
+      color: var(--color-primary);
+    }
+
+    &--favorite {
+      color: var(--color-like);
+    }
+  }
+}

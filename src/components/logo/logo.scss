@@ -1,0 +1,33 @@
+@use '../../styles/mixins' as *;
+
+.logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: var(--size-1);
+  align-items: center;
+  font-size: var(--font-size-headline-medium);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+
+  @include compact-down {
+    font-size: var(--font-size-headline-small);
+  }
+
+  @include hover {
+    opacity: var(--opacity-hover);
+  }
+
+  &--dark {
+    color: var(--color-on-primary);
+  }
+
+  &--light {
+    color: var(--color-white);
+  }
+
+  &__mark {
+    width: var(--size-4);
+    height: var(--size-4);
+  }
+}

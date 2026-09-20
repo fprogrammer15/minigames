@@ -1,0 +1,81 @@
+@use '../../styles/mixins' as *;
+
+.button {
+  // figma: the border is inside the button, so it must not change its size
+  --button-border-color: var(--color-on-primary);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: inset 0 0 0 var(--border-width-bold) var(--button-border-color);
+  border-radius: var(--corner-small);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-label-large);
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+  color: var(--color-on-primary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+
+  &:active {
+    transform: scale(var(--scale-pressed));
+  }
+
+  &:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &--small {
+    padding: var(--btn-small-padding);
+  }
+
+  &--medium {
+    padding: var(--btn-medium-padding);
+  }
+
+  &--large {
+    padding: var(--btn-large-padding);
+    font-size: var(--font-size-body-large);
+  }
+
+  &--filled {
+    background-color: var(--color-primary);
+
+    @include hover {
+      &:not(:disabled) {
+        background-color: var(--color-primary-high);
+      }
+    }
+  }
+
+  &--outlined {
+    background-color: transparent;
+
+    @include hover {
+      &:not(:disabled) {
+        background-color: var(--color-surface);
+      }
+    }
+  }
+
+  &--outlined-inverse {
+    --button-border-color: var(--color-white);
+
+    color: var(--color-white);
+    background-color: transparent;
+
+    @include hover {
+      &:not(:disabled) {
+        --button-border-color: var(--color-primary);
+      }
+    }
+  }
+}
