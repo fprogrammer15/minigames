@@ -1,0 +1,333 @@
+@use '../../styles/mixins' as *;
+
+.auth-dialog {
+  width: var(--dialog-width);
+  max-width: calc(100% - var(--size-4));
+  max-height: calc(100dvh - var(--size-4));
+  padding: 0;
+  overflow-y: auto;
+  border: var(--border-width-thick) solid var(--color-on-primary);
+  border-radius: var(--corner-extra-large);
+  color: var(--color-on-bg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-level-3);
+
+  &::backdrop {
+    background-color: var(--color-backdrop);
+  }
+
+  &[open] {
+    animation: dialog-show var(--transition-base);
+
+    &::backdrop {
+      animation: backdrop-show var(--transition-base);
+    }
+  }
+
+  &.is-closing {
+    animation: dialog-hide var(--transition-base) forwards;
+
+    &::backdrop {
+      animation: backdrop-hide var(--transition-base) forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[open],
+    &[open]::backdrop {
+      animation: none;
+    }
+  }
+
+  // The dialog has no padding, so a click on it means a click on the backdrop
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    // figma: the border is inside the dialog, so the padding is smaller by its width
+    padding: calc(var(--size-4) - var(--border-width-thick));
+
+    @include mobile {
+      padding: calc(var(--size-3) - var(--border-width-thick));
+    }
+  }
+
+  &__tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-shrink: 0;
+    height: var(--size-6);
+    border: var(--border-width-card) solid var(--color-on-primary);
+    border-radius: var(--corner-medium);
+    background-color: var(--color-white);
+  }
+
+  &__tab {
+    @include button-reset;
+
+    border-radius: var(--corner-small);
+    font-size: var(--font-size-body-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-bg);
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
+
+    @include hover {
+      background-color: var(--color-tab-hover);
+    }
+
+    &.is-active {
+      color: var(--color-white);
+      background-color: var(--color-bg-footer-low);
+    }
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    animation: panel-show var(--transition-base);
+
+    &[hidden] {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+  }
+
+  &__title {
+    font-size: var(--font-size-headline-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  &__subtitle,
+  &__footer {
+    font-size: var(--font-size-body-small);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+  }
+
+  &__fields,
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+  }
+
+  &__link {
+    @include button-reset;
+
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+
+    @include hover {
+      color: var(--color-tertiary);
+    }
+
+    &:active {
+      color: var(--color-tertiary);
+    }
+
+    &--forgot {
+      align-self: flex-end;
+      cursor: pointer;
+    }
+  }
+
+  // Two classes to override the base .button styles
+  &__actions &__submit {
+    width: 100%;
+    border-radius: var(--corner-medium);
+    font-size: var(--font-size-body-medium);
+    box-shadow:
+      inset 0 0 0 var(--border-width-card) var(--button-border-color),
+      var(--shadow-pressable);
+  }
+
+  &__divider {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    font-size: var(--font-size-label-medium);
+    font-weight: var(--font-weight-bold);
+
+    &::before,
+    &::after {
+      flex: 1;
+      height: var(--border-width);
+      background-color: var(--color-divider);
+      content: '';
+    }
+  }
+
+  &__google {
+    @include flex-center;
+
+    gap: var(--size-2);
+    width: 100%;
+    // figma: the border is inside the button, so the padding is smaller by its width
+    padding: calc(var(--size-2) - var(--border-width-bold)) var(--size-3);
+    border: var(--border-width-bold) solid var(--color-on-primary);
+    border-radius: var(--corner-medium);
+    font-size: var(--font-size-body-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+    background-color: var(--color-white);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+
+    @include hover {
+      background-color: var(--color-surface);
+    }
+
+    &:active {
+      transform: scale(var(--scale-pressed));
+    }
+
+    &:disabled {
+      opacity: var(--opacity-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-05);
+    justify-content: center;
+  }
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+
+  &__label {
+    align-self: flex-start;
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  &__control {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    height: var(--size-6);
+    padding-inline: var(--size-2);
+    border: var(--border-width-bold) solid var(--color-on-primary);
+    border-radius: var(--corner-small);
+    background-color: var(--color-white);
+    cursor: text;
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+
+    @include hover {
+      border-color: var(--color-tertiary);
+    }
+
+    &:focus-within {
+      border-color: var(--color-tertiary);
+      background-color: var(--color-surface-low);
+    }
+
+    &:has(:disabled) {
+      opacity: var(--opacity-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-on-primary);
+    background: none;
+
+    &::placeholder {
+      color: var(--color-on-bg);
+      opacity: 1;
+    }
+  }
+
+  &__toggle {
+    @include button-reset;
+    @include flex-center;
+
+    flex-shrink: 0;
+    transition: color var(--transition-fast);
+
+    @include hover {
+      color: var(--color-tertiary);
+    }
+  }
+
+  // Two classes to override the base .icon display
+  &__toggle &__toggle-icon--hide,
+  &__toggle[aria-pressed='true'] &__toggle-icon--show {
+    display: none;
+  }
+
+  &__toggle[aria-pressed='true'] &__toggle-icon--hide {
+    display: block;
+  }
+}
+
+@keyframes dialog-show {
+  from {
+    opacity: 0;
+    transform: translateY(var(--size-2)) scale(var(--scale-dialog-hidden));
+  }
+}
+
+@keyframes dialog-hide {
+  to {
+    opacity: 0;
+    transform: translateY(var(--size-2)) scale(var(--scale-dialog-hidden));
+  }
+}
+
+@keyframes backdrop-show {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes backdrop-hide {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes panel-show {
+  from {
+    opacity: 0;
+    transform: translateX(var(--size-2));
+  }
+}
