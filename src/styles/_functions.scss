@@ -1,0 +1,9 @@
+@use 'sass:math';
+
+$base-font-size: 16px;
+
+// px -> rem: to-rem(24px) => 1.5rem
+// Named `to-rem` because `rem()` is a built-in CSS math function.
+@function to-rem($px) {
+  @return math.div($px, $base-font-size) * 1rem;
+}
