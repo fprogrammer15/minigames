@@ -18,6 +18,7 @@ export interface ButtonOptions {
   variant?: ButtonVariant;
   size?: ButtonSize;
   className?: string;
+  type?: 'button' | 'submit';
   // Buttons with this option open the auth dialog in the given mode
   authMode?: AuthMode;
 }
@@ -28,6 +29,7 @@ export function buttonHtml(options: ButtonOptions): string {
     variant = ButtonVariant.Filled,
     size = ButtonSize.Medium,
     className = '',
+    type = 'button',
     authMode,
   } = options;
   const classNames = ['button', `button--${variant}`, `button--${size}`, className]
@@ -35,5 +37,5 @@ export function buttonHtml(options: ButtonOptions): string {
     .join(' ');
   const authAttribute = authMode ? `data-auth="${authMode}"` : '';
 
-  return `<button class="${classNames}" type="button" ${authAttribute}>${text}</button>`;
+  return `<button class="${classNames}" type="${type}" ${authAttribute}>${text}</button>`;
 }
