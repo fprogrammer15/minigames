@@ -2,8 +2,8 @@
 
 $base-font-size: 16px;
 
-// px -> rem: to-rem(24px) => 1.5rem
-// Named `to-rem` because `rem()` is a built-in CSS math function.
+// to-rem(24px) => 1.5rem
+// The name `rem` is taken by a built-in CSS function
 @function to-rem($px) {
   @return math.div($px, $base-font-size) * 1rem;
 }

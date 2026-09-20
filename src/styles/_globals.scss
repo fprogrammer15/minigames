@@ -1,5 +1,4 @@
 @use 'tokens' as *;
-@use 'mixins' as *;
 
 *,
 *::before,
@@ -8,6 +7,8 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-width: $breakpoint-mobile;
   min-height: 100vh;
   margin: 0;
@@ -20,7 +21,7 @@ body {
   background-color: var(--color-bg);
 }
 
-// Scroll lock while the burger menu or a dialog is open
+// No page scroll while the menu or a dialog is open
 body.is-locked {
   overflow: hidden;
 }
@@ -53,20 +54,7 @@ p {
   margin: 0;
 }
 
-// ---------- Responsive layout tokens ----------
-:root {
-  @include tablet-down {
-    --section-padding-inline: var(--size-5);
-    --section-padding-block: var(--size-3);
-    --section-gap: var(--size-3);
-    --header-padding-inline: var(--size-5);
-    --header-padding-block: var(--size-2);
-  }
-
-  @include mobile {
-    --section-padding-inline: var(--size-2);
-    --section-padding-block: var(--size-2);
-    --section-gap: var(--size-2);
-    --header-padding-inline: var(--size-2);
-  }
+// Keeps the footer at the bottom on short pages
+.main {
+  flex: 1 0 auto;
 }
