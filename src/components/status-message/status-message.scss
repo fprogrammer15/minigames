@@ -1,0 +1,42 @@
+.status-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--size-4) var(--size-3);
+  border: var(--border-width-bold) dashed var(--color-on-primary);
+  border-radius: var(--corner-large);
+  text-align: center;
+  color: var(--color-on-primary);
+  background-color: var(--color-white);
+
+  &--error {
+    border-style: solid;
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background-color: var(--color-error-container);
+  }
+
+  // Two classes to override the base .icon size
+  & &__icon {
+    width: var(--size-5);
+    height: var(--size-5);
+  }
+
+  &__title {
+    font-size: var(--font-size-body-large);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__text {
+    font-size: var(--font-size-body-small);
+    line-height: var(--line-height-body);
+    color: var(--color-on-bg);
+  }
+
+  &__button {
+    margin-top: var(--size-1);
+  }
+}
