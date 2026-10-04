@@ -18,6 +18,10 @@ export enum IconName {
   Close = 'close',
   Error = 'error',
   Search = 'search',
+  ChevronLeft = 'chevron-left',
+  ChevronRight = 'chevron-right',
+  ArrowDropDown = 'arrow-drop-down',
+  Check = 'check',
 }
 
 const ICON_PATHS: Record<IconName, string> = {
@@ -52,6 +56,10 @@ const ICON_PATHS: Record<IconName, string> = {
     'M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z',
   [IconName.Search]:
     'M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z',
+  [IconName.ChevronLeft]: 'M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z',
+  [IconName.ChevronRight]: 'M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z',
+  [IconName.ArrowDropDown]: 'm7 10 5 5 5-5z',
+  [IconName.Check]: 'M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',
 };
 
 export function iconHtml(name: IconName, className = ''): string {
