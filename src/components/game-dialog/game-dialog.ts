@@ -72,6 +72,7 @@ export class GameDialog {
   private readonly detailsLoader: AsyncContent<GameDetails | null>;
   private readonly commentsLoader: AsyncContent<CommentsResponse | null>;
   private slug = '';
+  private finishClosing: ((event: AnimationEvent) => void) | null = null;
 
   public readonly element: HTMLDialogElement;
 
@@ -162,8 +163,22 @@ export class GameDialog {
     this.comments.hidden = true;
   }
 
+  // Forward right after Back can reopen the dialog during its close animation
+  private cancelClosing(): void {
+    if (this.finishClosing) {
+      this.element.removeEventListener('animationend', this.finishClosing);
+      this.finishClosing = null;
+    }
+
+    this.element.classList.remove(CLOSING_CLASS);
+  }
+
   public open(slug: string): void {
-    if (this.element.open && slug === this.slug) {
+    const wasClosing = this.element.classList.contains(CLOSING_CLASS);
+
+    this.cancelClosing();
+
+    if (!wasClosing && this.element.open && slug === this.slug) {
       return;
     }
 
@@ -194,16 +209,16 @@ export class GameDialog {
     }
 
     // Animations of child elements bubble up, so only the dialog animation counts
-    const handleAnimationEnd = (event: AnimationEvent): void => {
+    this.finishClosing = (event: AnimationEvent): void => {
       if (event.target !== this.element) {
         return;
       }
 
-      this.element.removeEventListener('animationend', handleAnimationEnd);
+      this.cancelClosing();
       this.element.close();
     };
 
     this.element.classList.add(CLOSING_CLASS);
-    this.element.addEventListener('animationend', handleAnimationEnd);
+    this.element.addEventListener('animationend', this.finishClosing);
   }
 }
