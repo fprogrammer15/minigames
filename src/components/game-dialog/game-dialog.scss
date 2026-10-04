@@ -1,0 +1,482 @@
+@use '../../styles/mixins' as *;
+
+// Common look of the white blocks inside the dialog: specs, records, comments
+@mixin dialog-card {
+  border-radius: var(--corner-medium);
+  background-color: var(--color-white);
+  box-shadow: inset 0 0 0 var(--border-width-medium) var(--color-on-primary);
+}
+
+.game-dialog {
+  width: var(--game-dialog-width);
+  max-width: calc(100% - var(--size-4));
+  max-height: calc(100dvh - var(--size-4));
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: var(--border-width-thick) solid var(--color-on-primary);
+  border-radius: var(--corner-extra-large);
+  color: var(--color-on-bg);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-level-3);
+
+  // Mobile: the dialog takes the whole screen
+  @include mobile {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  &::backdrop {
+    background-color: var(--color-backdrop);
+  }
+
+  &[open] {
+    animation: dialog-show var(--transition-base);
+
+    &::backdrop {
+      animation: backdrop-show var(--transition-base);
+    }
+  }
+
+  &.is-closing {
+    animation: dialog-hide var(--transition-base) forwards;
+
+    &::backdrop {
+      animation: backdrop-hide var(--transition-base) forwards;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &[open],
+    &[open]::backdrop {
+      animation: none;
+    }
+  }
+
+  &__close {
+    @include button-reset;
+    @include flex-center;
+
+    position: absolute;
+    top: var(--size-3);
+    right: var(--size-3);
+    width: var(--size-5);
+    height: var(--size-5);
+    border-radius: var(--corner-full);
+    color: var(--color-on-primary);
+    background-color: var(--color-white);
+    box-shadow: inset 0 0 0 var(--border-width-medium) var(--color-on-primary);
+    transition: background-color var(--transition-fast);
+
+    @include mobile {
+      top: var(--size-2);
+      right: var(--size-2);
+      width: var(--size-4);
+      height: var(--size-4);
+    }
+
+    @include hover {
+      background-color: var(--color-surface);
+    }
+  }
+
+  // Two classes to override the base .icon size
+  &__close &__close-icon {
+    width: var(--icon-size-large);
+    height: var(--icon-size-large);
+  }
+
+  &__hero {
+    padding: var(--size-2) var(--size-2) 0;
+
+    @include mobile {
+      padding: 0;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: var(--game-hero-height);
+    object-fit: cover;
+    border-radius: var(--corner-large);
+
+    @include mobile {
+      border-radius: 0;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-3);
+    padding: var(--size-3);
+  }
+
+  &__header {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    justify-content: space-between;
+
+    @include mobile {
+      flex-direction: column;
+      gap: var(--size-1);
+      align-items: flex-start;
+    }
+  }
+
+  &__title {
+    font-size: var(--font-size-display-medium);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading);
+    color: var(--color-on-primary);
+    overflow-wrap: anywhere;
+  }
+
+  &__ratings {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--size-2);
+  }
+
+  &__rating {
+    display: inline-flex;
+    gap: var(--size-05);
+    align-items: center;
+    font-size: var(--font-size-label-large);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  // Two classes to override the base .icon size
+  & &__rating-icon {
+    width: var(--icon-size-large);
+    height: var(--icon-size-large);
+
+    &--star {
+      color: var(--color-primary);
+    }
+
+    &--like {
+      color: var(--color-like);
+    }
+  }
+
+  &__description {
+    font-size: var(--font-size-body-medium);
+    line-height: var(--line-height-body);
+
+    @include mobile {
+      font-size: var(--font-size-body-small);
+    }
+  }
+
+  &__specs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--size-2);
+    margin: 0;
+
+    @include mobile {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__spec {
+    @include dialog-card;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-2);
+  }
+
+  &__spec-label {
+    font-size: var(--font-size-label-medium);
+  }
+
+  &__spec-value {
+    margin: 0;
+    font-size: var(--font-size-label-large);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--size-2);
+
+    @include mobile {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+  }
+
+  // Two classes to override the base .button styles
+  &__actions &__play {
+    width: 100%;
+    border-radius: var(--corner-medium);
+    font-size: var(--font-size-body-medium);
+    box-shadow:
+      inset 0 0 0 var(--border-width-bold) var(--button-border-color),
+      var(--shadow-pressable);
+  }
+
+  &__favorite {
+    @include button-reset;
+    @include flex-center;
+
+    gap: var(--size-1);
+    padding: var(--btn-large-padding);
+    border-radius: var(--corner-medium);
+    font-size: var(--font-size-body-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+    background-color: var(--color-white);
+    box-shadow:
+      inset 0 0 0 var(--border-width-bold) var(--color-on-primary),
+      var(--shadow-pressable);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
+
+    @include mobile {
+      width: var(--size-6);
+      padding: 0;
+    }
+
+    @include hover {
+      background-color: var(--color-surface);
+    }
+
+    &:active {
+      transform: scale(var(--scale-pressed));
+    }
+  }
+
+  &__favorite[aria-pressed='true'] &__favorite-icon {
+    color: var(--color-like);
+  }
+
+  // Mobile shows only the heart icon
+  &__favorite-text {
+    @include mobile {
+      @include visually-hidden;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+  }
+
+  &__section-title {
+    display: flex;
+    gap: var(--size-1);
+    align-items: center;
+    font-size: var(--font-size-body-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  &__note {
+    font-size: var(--font-size-label-large);
+  }
+
+  &__records {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__record {
+    @include dialog-card;
+
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--size-2);
+    font-size: var(--font-size-label-large);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  &__record-player,
+  &__record-result {
+    display: flex;
+    gap: var(--size-2);
+    align-items: center;
+    min-width: 0;
+
+    @include mobile {
+      gap: var(--size-1);
+    }
+  }
+
+  &__record-name {
+    @include text-ellipsis;
+  }
+
+  &__record-result {
+    flex-shrink: 0;
+  }
+
+  &__record-time {
+    font-size: var(--font-size-label-medium);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-on-bg);
+  }
+
+  &__comments {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    padding: 0 var(--size-3) var(--size-3);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+  }
+
+  &__not-found {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    align-items: center;
+    // Room for the close button above the message
+    padding: var(--size-10) var(--size-3) var(--size-3);
+  }
+
+  // Skeleton blocks
+  &__line {
+    width: 100%;
+    height: var(--size-2);
+
+    &--title {
+      width: 60%;
+      height: var(--size-5);
+    }
+
+    &--short {
+      width: 40%;
+    }
+
+    &--button {
+      height: var(--size-6);
+    }
+  }
+
+  &__spec-skeleton {
+    height: var(--size-7);
+  }
+
+  &__row-skeleton {
+    height: var(--size-6);
+  }
+
+  &__comment-skeleton {
+    height: var(--size-14);
+  }
+}
+
+.comment {
+  @include dialog-card;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1);
+  padding: var(--size-2);
+
+  &__header {
+    display: flex;
+    gap: var(--size-1);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__author {
+    display: flex;
+    gap: var(--size-1);
+    align-items: center;
+    min-width: 0;
+    font-size: var(--font-size-label-large);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+  }
+
+  &__name {
+    @include text-ellipsis;
+  }
+
+  &__avatar {
+    @include flex-center;
+
+    flex-shrink: 0;
+    // figma: 28px avatar
+    width: calc(var(--size-3) + var(--size-05));
+    height: calc(var(--size-3) + var(--size-05));
+    border: var(--border-width) solid var(--color-on-primary);
+    border-radius: var(--corner-full);
+    font-size: var(--font-size-label-medium);
+    background-color: var(--color-avatar-random-1);
+
+    &--2 {
+      background-color: var(--color-primary);
+    }
+
+    &--3 {
+      background-color: var(--color-avatar-random-3);
+    }
+
+    &--4 {
+      background-color: var(--color-avatar-random-2);
+    }
+
+    &--5 {
+      background-color: var(--color-avatar-random-4);
+    }
+  }
+
+  &__time {
+    flex-shrink: 0;
+    font-size: var(--font-size-label-medium);
+  }
+
+  &__text {
+    font-size: var(--font-size-body-small);
+    line-height: var(--line-height-body);
+    overflow-wrap: anywhere;
+  }
+
+  &__likes {
+    display: inline-flex;
+    gap: var(--size-05);
+    align-items: center;
+    align-self: flex-start;
+    font-size: var(--font-size-label-medium);
+    font-weight: var(--font-weight-bold);
+  }
+
+  // Two classes to override the base .icon size
+  & &__like-icon {
+    width: var(--icon-size-small);
+    height: var(--icon-size-small);
+  }
+}

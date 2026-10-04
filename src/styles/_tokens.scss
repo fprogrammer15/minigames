@@ -176,6 +176,10 @@ $card-info-threshold: 288px;
     --sort-menu-width: 200px;
     --ratio-card-image: 16 / 9;
 
+    // Game Details dialog
+    --game-dialog-width: 600px;
+    --game-hero-height: 188px;
+
     // Interaction states
     --scale-pressed: 0.97;
     --scale-dialog-hidden: 0.95;
@@ -220,6 +224,7 @@ $card-info-threshold: 288px;
       --hero-box-width: 100%;
       --slider-height: 200px;
       --developer-image-height: 227px;
+      --game-hero-height: 220px;
     }
   }
 }
