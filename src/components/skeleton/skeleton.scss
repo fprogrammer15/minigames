@@ -1,0 +1,26 @@
+.skeleton {
+  display: block;
+  border-radius: var(--corner-small);
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton) 25%,
+    var(--color-skeleton-shine) 50%,
+    var(--color-skeleton) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shine var(--duration-skeleton) ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes skeleton-shine {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: -100% 0;
+  }
+}
