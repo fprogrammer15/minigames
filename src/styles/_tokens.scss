@@ -59,6 +59,12 @@ $card-info-threshold: 288px;
     --color-divider: rgb(36 33 69 / 20%);
     --gradient-card-info: linear-gradient(to bottom, transparent, rgb(0 0 0 / 80%));
 
+    // Colors: loading, error and notification states (not in the guidebook)
+    --color-success: #1e7a46;
+    --color-error-container: #fdeceb;
+    --color-skeleton: #ebe8f3;
+    --color-skeleton-shine: #f7f6fb;
+
     // Font families
     --font-family-primary: 'Inter', system-ui, sans-serif;
     --font-family-secondary: 'Roboto', system-ui, sans-serif;
@@ -160,6 +166,10 @@ $card-info-threshold: 288px;
     // Motion
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
+    --duration-skeleton: 1.4s;
+
+    // Notifications
+    --snackbar-width: 420px;
 
     // Interaction states
     --scale-pressed: 0.97;
