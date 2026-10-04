@@ -1,0 +1,87 @@
+@use '../../styles/mixins' as *;
+
+// The list is a popover: reset the browser popover styles
+.snackbars {
+  inset: auto 0 var(--size-3);
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0 var(--size-2);
+  border: none;
+  overflow: visible;
+  background: none;
+  // Clicks go through the empty space to the page
+  pointer-events: none;
+
+  &:popover-open {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+    align-items: center;
+  }
+}
+
+.snackbar {
+  display: flex;
+  gap: var(--size-2);
+  align-items: center;
+  width: 100%;
+  max-width: var(--snackbar-width);
+  padding: var(--size-2) var(--size-2) var(--size-2) var(--size-3);
+  border: var(--border-width-bold) solid var(--color-on-primary);
+  border-radius: var(--corner-medium);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  background-color: var(--color-tertiary);
+  box-shadow: var(--shadow-soft);
+  pointer-events: auto;
+  animation: snackbar-show var(--transition-base);
+
+  &--success {
+    background-color: var(--color-success);
+  }
+
+  &--error {
+    background-color: var(--color-error);
+  }
+
+  &.is-hiding {
+    animation: snackbar-hide var(--transition-base) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  &__text {
+    flex: 1;
+    line-height: var(--line-height-body);
+  }
+
+  &__close {
+    @include button-reset;
+    @include flex-center;
+
+    flex-shrink: 0;
+    transition: opacity var(--transition-fast);
+
+    @include hover {
+      opacity: var(--opacity-hover);
+    }
+  }
+}
+
+@keyframes snackbar-show {
+  from {
+    opacity: 0;
+    transform: translateY(var(--size-2));
+  }
+}
+
+@keyframes snackbar-hide {
+  to {
+    opacity: 0;
+    transform: translateY(var(--size-2));
+  }
+}
