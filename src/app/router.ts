@@ -66,6 +66,8 @@ export class Router {
   private readonly listeners: RouteListener[] = [];
   private currentPageName: PageName | null = null;
   private currentView: View | null = null;
+  // history.back() is async: a second close request must not go back one more step
+  private isGoingBack = false;
 
   constructor(outlet: HTMLElement) {
     this.outlet = outlet;
@@ -176,12 +178,13 @@ export class Router {
   }
 
   public closeDialog(key: QueryKey): void {
-    if (!new URLSearchParams(location.search).has(key)) {
+    if (this.isGoingBack || !new URLSearchParams(location.search).has(key)) {
       return;
     }
 
     // The dialog was opened inside the app: going back restores the page URL
     if (isDialogEntry(history.state)) {
+      this.isGoingBack = true;
       history.back();
       return;
     }
@@ -192,6 +195,7 @@ export class Router {
 
   public start(): void {
     addEventListener('popstate', () => {
+      this.isGoingBack = false;
       this.render();
     });
 
