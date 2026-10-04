@@ -45,10 +45,17 @@ class Snackbar {
     return this.list;
   }
 
+  // While a modal dialog is open, the page outside it cannot be clicked, so the list
+  // is moved into the dialog: the close buttons keep working and the list stays on top
   private bringToFront(list: HTMLElement): void {
-    // A dialog opened after the list covers it, so the list is shown again above the dialog
-    if (list.matches(OPEN_POPOVER_SELECTOR) && document.querySelector(OPEN_MODAL_SELECTOR)) {
-      list.hidePopover();
+    const parent = document.querySelector(OPEN_MODAL_SELECTOR) ?? document.body;
+
+    if (list.parentElement !== parent) {
+      if (list.matches(OPEN_POPOVER_SELECTOR)) {
+        list.hidePopover();
+      }
+
+      parent.append(list);
     }
 
     if (!list.matches(OPEN_POPOVER_SELECTOR)) {
