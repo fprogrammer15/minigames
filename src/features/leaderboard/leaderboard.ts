@@ -9,6 +9,7 @@ import { skeletonHtml } from '../../components/skeleton/skeleton';
 import { emptyStateHtml } from '../../components/status-message/status-message';
 import { fetchLeaderboard } from '../../services/leaderboard-service';
 import type { LeaderboardEntry } from '../../types/game';
+import type { View } from '../../types/view';
 import { escapeHtml, getElement, html } from '../../utils/dom';
 import { formatCompact, formatNumber, getInitials } from '../../utils/format';
 
@@ -109,7 +110,7 @@ function leaderboardHtml(): string {
   `;
 }
 
-export function createLeaderboard(): HTMLElement {
+export function createLeaderboard(): View {
   const section = html(leaderboardHtml());
   const content = getElement(section, '.leaderboard__content', HTMLDivElement);
   const loader = new AsyncContent<LeaderboardEntry[]>({
@@ -128,5 +129,10 @@ export function createLeaderboard(): HTMLElement {
 
   void loader.load();
 
-  return section;
+  return {
+    element: section,
+    destroy: (): void => {
+      loader.abort();
+    },
+  };
 }

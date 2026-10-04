@@ -6,6 +6,7 @@ import { skeletonHtml } from '../../components/skeleton/skeleton';
 import { emptyStateHtml } from '../../components/status-message/status-message';
 import { fetchFeaturedGames } from '../../services/games-service';
 import type { GameCard } from '../../types/game';
+import type { View } from '../../types/view';
 import { escapeHtml, getElement, html } from '../../utils/dom';
 import { formatCompact, formatRating } from '../../utils/format';
 
@@ -161,8 +162,19 @@ class Slider {
 
     this.content.innerHTML = trackHtml(visibleGames.map((game) => gameCardHtml(game)).join(''));
   }
+
+  public destroy(): void {
+    this.loader.abort();
+  }
 }
 
-export function createSlider(): HTMLElement {
-  return new Slider().element;
+export function createSlider(): View {
+  const slider = new Slider();
+
+  return {
+    element: slider.element,
+    destroy: (): void => {
+      slider.destroy();
+    },
+  };
 }
