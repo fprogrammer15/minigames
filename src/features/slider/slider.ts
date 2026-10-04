@@ -90,13 +90,21 @@ function sliderHtml(): string {
   `;
 }
 
-// The active game is in the center, its neighbours are around it, the list is looped
+// The active game is in the center, its neighbours are around it, the list is looped:
+// 9 games, active 0 => games 7, 8, 0, 1, 2
 export function getVisibleGames<T>(games: T[], activeIndex: number, count: number): T[] {
   const centerOffset = Math.floor(count / 2);
+  const visibleGames: T[] = [];
 
-  return Array.from({ length: count }, (_, index) =>
-    games.at((activeIndex + index - centerOffset) % games.length),
-  ).filter((game) => game !== undefined);
+  for (let slot = 0; slot < count && games.length > 0; slot += 1) {
+    const game = games.at((activeIndex + slot - centerOffset) % games.length);
+
+    if (game !== undefined) {
+      visibleGames.push(game);
+    }
+  }
+
+  return visibleGames;
 }
 
 class Slider {
