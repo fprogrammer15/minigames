@@ -9,3 +9,6 @@ export enum ApiPath {
 
 export const LIBRARY_PAGE_SIZE = 6;
 export const COMMENTS_LIMIT = 3;
+
+// Price value of free games
+export const FREE_PRICE = 'Free';

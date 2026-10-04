@@ -2,11 +2,10 @@ import './library-card.scss';
 import { buttonHtml, ButtonSize } from '../../components/button/button';
 import { iconHtml, IconName } from '../../components/icon/icon';
 import { skeletonHtml } from '../../components/skeleton/skeleton';
+import { FREE_PRICE } from '../../constants/api';
 import type { GameCard } from '../../types/game';
 import { escapeHtml } from '../../utils/dom';
 import { formatCompact, formatRating } from '../../utils/format';
-
-const FREE_PRICE = 'Free';
 
 export function libraryCardHtml(game: GameCard, categoryLabel: string): string {
   const name = escapeHtml(game.name);
