@@ -162,6 +162,7 @@ $card-info-threshold: 288px;
     --z-menu-toggle: 2;
     --z-header: 100;
     --z-dialog: 300;
+    --z-dropdown: 50;
 
     // Motion
     --transition-fast: 150ms ease;
@@ -170,6 +171,10 @@ $card-info-threshold: 288px;
 
     // Notifications
     --snackbar-width: 420px;
+
+    // Library
+    --sort-menu-width: 200px;
+    --ratio-card-image: 16 / 9;
 
     // Interaction states
     --scale-pressed: 0.97;

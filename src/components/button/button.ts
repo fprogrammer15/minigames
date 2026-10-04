@@ -24,6 +24,8 @@ export interface ButtonOptions {
   authMode?: AuthMode;
   // Extra data attributes, for example { retry: '' } => data-retry=""
   data?: Record<string, string>;
+  // A longer name for screen readers, for example "Details: Cat Mail Co."
+  ariaLabel?: string;
 }
 
 export interface LinkButtonOptions {
@@ -66,9 +68,11 @@ export function buttonHtml(options: ButtonOptions): string {
     type = 'button',
     authMode,
     data = {},
+    ariaLabel,
   } = options;
   const classNames = getClassNames(variant, size, className);
   const authAttribute = authMode ? `data-auth="${authMode}"` : '';
+  const labelAttribute = ariaLabel ? `aria-label="${escapeHtml(ariaLabel)}"` : '';
 
-  return `<button class="${classNames}" type="${type}" ${authAttribute} ${dataAttributesHtml(data)}>${text}</button>`;
+  return `<button class="${classNames}" type="${type}" ${authAttribute} ${labelAttribute} ${dataAttributesHtml(data)}>${text}</button>`;
 }
