@@ -1,3 +1,16 @@
+const HTML_ESCAPES: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+};
+
+// Text from the API is put into markup, so special characters must not become tags
+export function escapeHtml(value: string): string {
+  return value.replaceAll(/[&<>"']/g, (character) => HTML_ESCAPES[character] ?? character);
+}
+
 export function html(markup: string): HTMLElement {
   const template = document.createElement('template');
 
