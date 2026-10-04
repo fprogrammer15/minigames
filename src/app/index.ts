@@ -1,20 +1,53 @@
-import { AuthDialog } from '../components/auth-dialog/auth-dialog';
+import { AuthDialog, isAuthMode } from '../components/auth-dialog/auth-dialog';
 import { createFooter } from '../components/footer/footer';
 import { createHeader } from '../components/header/header';
-import { renderHomePage } from '../pages/home/home-page';
-import { AppRoute } from '../types/routes';
+import { updateActiveNavLinks } from '../components/nav-links/nav-links';
+import { createHomePage } from '../pages/home/home-page';
+import { createLibraryPage } from '../pages/library/library-page';
+import { createNotFoundPage } from '../pages/not-found/not-found-page';
+import { AppRoute, PageName, QueryKey } from '../types/routes';
 import { html } from '../utils/dom';
 import { Router } from './router';
 
+const APP_NAME = 'MiniGames';
+
+const PAGE_TITLES: Record<PageName, string> = {
+  [PageName.Home]: APP_NAME,
+  [PageName.Library]: `Game Library | ${APP_NAME}`,
+  [PageName.NotFound]: `Page Not Found | ${APP_NAME}`,
+};
+
 export function initApp(): void {
   const main = html('<main class="main"></main>');
-
-  const authDialog = new AuthDialog();
+  const router = new Router(main);
+  const authDialog = new AuthDialog({
+    onModeRequest: (mode): void => {
+      router.openDialog(QueryKey.Auth, mode);
+    },
+    onCloseRequest: (): void => {
+      router.closeDialog(QueryKey.Auth);
+    },
+  });
 
   document.body.append(createHeader(), main, createFooter(), authDialog.element);
 
-  const router = new Router(main);
+  router.register([AppRoute.Home, AppRoute.HomeAlias], PageName.Home, createHomePage);
+  router.register([AppRoute.Library], PageName.Library, createLibraryPage);
+  router.registerNotFound(createNotFoundPage);
 
-  router.register(AppRoute.Home, renderHomePage);
+  // Header and dialogs follow the URL too
+  router.onChange(({ pageName, query }) => {
+    const authMode = query.get(QueryKey.Auth);
+
+    document.title = PAGE_TITLES[pageName];
+    updateActiveNavLinks(pageName);
+
+    if (isAuthMode(authMode)) {
+      authDialog.open(authMode);
+    } else {
+      authDialog.close();
+    }
+  });
+
   router.start();
 }

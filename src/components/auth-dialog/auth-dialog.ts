@@ -13,8 +13,16 @@ enum ToggleLabel {
   Hide = 'Hide password',
 }
 
-function isAuthMode(value: string | undefined): value is AuthMode {
+export function isAuthMode(value: string | null | undefined): value is AuthMode {
   return value === AuthMode.Login || value === AuthMode.Register;
+}
+
+// The dialog does not open or close by itself: it asks the app to change the URL
+export interface AuthDialogHandlers {
+  // A Log In or Sign Up button, a tab or a link inside the forms was clicked
+  onModeRequest: (mode: AuthMode) => void;
+  // A click on the backdrop or Escape
+  onCloseRequest: () => void;
 }
 
 function tabHtml(mode: AuthMode, label: string): string {
@@ -54,28 +62,31 @@ function createDialogElement(): HTMLDialogElement {
 }
 
 export class AuthDialog {
+  private readonly handlers: AuthDialogHandlers;
+
   public readonly element: HTMLDialogElement;
 
-  constructor() {
+  constructor(handlers: AuthDialogHandlers) {
+    this.handlers = handlers;
     this.element = createDialogElement();
     this.bindEvents();
   }
 
   private bindEvents(): void {
-    // Any element with data-auth opens the dialog in that mode: header and menu buttons,
+    // Any element with data-auth asks for that mode: header and menu buttons,
     // tabs and the links inside the forms
     document.addEventListener('click', (event: MouseEvent) => {
       const trigger = event.target instanceof Element ? event.target.closest('[data-auth]') : null;
 
       if (trigger instanceof HTMLElement && isAuthMode(trigger.dataset.auth)) {
-        this.open(trigger.dataset.auth);
+        this.handlers.onModeRequest(trigger.dataset.auth);
       }
     });
 
     this.element.addEventListener('click', (event: MouseEvent) => {
       // A click on the dialog element itself is a click on the backdrop
       if (event.target === this.element) {
-        this.close();
+        this.handlers.onCloseRequest();
         return;
       }
 
@@ -90,7 +101,7 @@ export class AuthDialog {
     // Escape: close with the animation instead of the instant default
     this.element.addEventListener('cancel', (event: Event) => {
       event.preventDefault();
-      this.close();
+      this.handlers.onCloseRequest();
     });
 
     this.element.addEventListener('close', () => {
