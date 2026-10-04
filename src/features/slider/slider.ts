@@ -21,6 +21,12 @@ function gameCardHtml(game: GameCard): string {
   return `
     <li class="slider__slide">
       <article class="game-card">
+        <button
+          class="game-card__open"
+          type="button"
+          aria-label="Details: ${name}"
+          data-game="${escapeHtml(game.slug)}"
+        ></button>
         <img class="game-card__image" src="${escapeHtml(game.cardImage)}" alt="${name}">
         <div class="game-card__info">
           <h3 class="game-card__title">${name}</h3>

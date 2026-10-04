@@ -148,6 +148,16 @@ $track-mobile: 56fr 218fr 56fr;
     object-fit: cover;
   }
 
+  // Covers the whole card: a click anywhere opens Game Details
+  &__open {
+    @include button-reset;
+
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-menu);
+    border-radius: inherit;
+  }
+
   // Hidden on narrow cards: they show only the image
   &__info {
     position: absolute;

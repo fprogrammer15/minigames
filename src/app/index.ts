@@ -1,5 +1,6 @@
 import { AuthDialog, isAuthMode } from '../components/auth-dialog/auth-dialog';
 import { createFooter } from '../components/footer/footer';
+import { GameDialog } from '../components/game-dialog/game-dialog';
 import { createHeader } from '../components/header/header';
 import { updateActiveNavLinks } from '../components/nav-links/nav-links';
 import { createHomePage } from '../pages/home/home-page';
@@ -28,8 +29,22 @@ export function initApp(): void {
       router.closeDialog(QueryKey.Auth);
     },
   });
+  const gameDialog = new GameDialog({
+    onOpenRequest: (slug): void => {
+      router.openDialog(QueryKey.Game, slug);
+    },
+    onCloseRequest: (): void => {
+      router.closeDialog(QueryKey.Game);
+    },
+  });
 
-  document.body.append(createHeader(), main, createFooter(), authDialog.element);
+  document.body.append(
+    createHeader(),
+    main,
+    createFooter(),
+    gameDialog.element,
+    authDialog.element,
+  );
 
   router.register([AppRoute.Home, AppRoute.HomeAlias], PageName.Home, createHomePage);
   router.register([AppRoute.Library], PageName.Library, () => createLibraryPage(router));
@@ -37,10 +52,17 @@ export function initApp(): void {
 
   // Header and dialogs follow the URL too
   router.onChange(({ pageName, query }) => {
+    const gameSlug = query.get(QueryKey.Game);
     const authMode = query.get(QueryKey.Auth);
 
     document.title = PAGE_TITLES[pageName];
     updateActiveNavLinks(pageName);
+
+    if (gameSlug) {
+      gameDialog.open(gameSlug);
+    } else {
+      gameDialog.close();
+    }
 
     if (isAuthMode(authMode)) {
       authDialog.open(authMode);
