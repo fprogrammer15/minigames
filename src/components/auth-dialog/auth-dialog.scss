@@ -299,32 +299,6 @@
   }
 }
 
-@keyframes dialog-show {
-  from {
-    opacity: 0;
-    transform: translateY(var(--size-2)) scale(var(--scale-dialog-hidden));
-  }
-}
-
-@keyframes dialog-hide {
-  to {
-    opacity: 0;
-    transform: translateY(var(--size-2)) scale(var(--scale-dialog-hidden));
-  }
-}
-
-@keyframes backdrop-show {
-  from {
-    opacity: 0;
-  }
-}
-
-@keyframes backdrop-hide {
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes panel-show {
   from {
     opacity: 0;
