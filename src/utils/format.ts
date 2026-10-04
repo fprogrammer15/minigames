@@ -17,6 +17,11 @@ export function formatCompact(value: number): string {
   return compactFormatter.format(value);
 }
 
+// 5 => "5.0", 4.85 => "4.9"
+export function formatRating(value: number): string {
+  return value.toFixed(1);
+}
+
 // "Alex_Pro99" => "AP"
 export function getInitials(name: string): string {
   const capitals = name.match(/[A-Z]/g) ?? [];
