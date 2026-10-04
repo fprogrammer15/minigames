@@ -40,15 +40,16 @@ function isDialogEntry(state: unknown): boolean {
   );
 }
 
-// Current URL with some query keys changed
+// Current URL with some query keys changed. Changed keys go to the end in the given order,
+// so the Library URL always looks the same: ?category=…&sort=…&page=…
 function getUrlWithQuery(changes: QueryChanges): string {
   const query = new URLSearchParams(location.search);
 
   for (const [key, value] of Object.entries(changes)) {
+    query.delete(key);
+
     if (typeof value === 'string') {
-      query.set(key, value);
-    } else {
-      query.delete(key);
+      query.append(key, value);
     }
   }
 
