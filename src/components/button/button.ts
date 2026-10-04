@@ -26,6 +26,31 @@ export interface ButtonOptions {
   data?: Record<string, string>;
 }
 
+export interface LinkButtonOptions {
+  text: string;
+  href: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+}
+
+function getClassNames(variant: ButtonVariant, size: ButtonSize, className: string): string {
+  return ['button', `button--${variant}`, `button--${size}`, className].filter(Boolean).join(' ');
+}
+
+// A link to an app page that looks like a button
+export function linkButtonHtml(options: LinkButtonOptions): string {
+  const {
+    text,
+    href,
+    variant = ButtonVariant.Filled,
+    size = ButtonSize.Medium,
+    className = '',
+  } = options;
+
+  return `<a class="${getClassNames(variant, size, className)}" href="${href}" data-link>${text}</a>`;
+}
+
 function dataAttributesHtml(data: Record<string, string>): string {
   return Object.entries(data)
     .map(([name, value]) => `data-${name}="${escapeHtml(value)}"`)
@@ -42,9 +67,7 @@ export function buttonHtml(options: ButtonOptions): string {
     authMode,
     data = {},
   } = options;
-  const classNames = ['button', `button--${variant}`, `button--${size}`, className]
-    .filter(Boolean)
-    .join(' ');
+  const classNames = getClassNames(variant, size, className);
   const authAttribute = authMode ? `data-auth="${authMode}"` : '';
 
   return `<button class="${classNames}" type="${type}" ${authAttribute} ${dataAttributesHtml(data)}>${text}</button>`;

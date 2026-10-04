@@ -1,0 +1,58 @@
+@use '../../styles/mixins' as *;
+
+.not-found {
+  &__container {
+    @include container;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    align-items: center;
+    padding-block: var(--size-15);
+    text-align: center;
+
+    @include tablet-down {
+      padding-block: var(--size-10);
+    }
+  }
+
+  &__code {
+    font-size: var(--font-size-display-large);
+    font-weight: var(--font-weight-extra-bold);
+    line-height: var(--line-height-heading);
+    color: var(--color-tertiary);
+  }
+
+  &__title {
+    font-size: var(--font-size-display-medium);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+
+    @include mobile {
+      font-size: var(--font-size-display-small);
+    }
+  }
+
+  &__text {
+    font-size: var(--font-size-body-large);
+    line-height: var(--line-height-body);
+
+    @include mobile {
+      font-size: var(--font-size-body-medium);
+    }
+  }
+
+  &__path {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-on-primary);
+    word-break: break-all;
+  }
+
+  // Two classes to override the base .button styles
+  &__container &__button {
+    margin-top: var(--size-2);
+    box-shadow:
+      inset 0 0 0 var(--border-width-bold) var(--button-border-color),
+      var(--shadow-pressable);
+  }
+}
