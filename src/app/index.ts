@@ -32,7 +32,7 @@ export function initApp(): void {
   document.body.append(createHeader(), main, createFooter(), authDialog.element);
 
   router.register([AppRoute.Home, AppRoute.HomeAlias], PageName.Home, createHomePage);
-  router.register([AppRoute.Library], PageName.Library, createLibraryPage);
+  router.register([AppRoute.Library], PageName.Library, () => createLibraryPage(router));
   router.registerNotFound(createNotFoundPage);
 
   // Header and dialogs follow the URL too
