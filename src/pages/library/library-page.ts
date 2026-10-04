@@ -189,7 +189,7 @@ class LibraryPage {
             'There are no games for these filters. Try another category or page.',
           );
 
-    this.pagination.show(this.getQuery().page, meta.totalPages);
+    this.pagination.show(meta.page, meta.totalPages);
   }
 
   private scrollToToolbar(): void {
