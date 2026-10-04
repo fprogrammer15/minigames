@@ -1,15 +1,3 @@
-export interface Game {
-  slug: string;
-  name: string;
-  category: string;
-  price: string;
-  shortDescription: string;
-  rating: number;
-  likesCount: number;
-  cardImage: string;
-  featured: boolean;
-}
-
 export interface GameCard {
   slug: string;
   name: string;
@@ -70,14 +58,4 @@ export interface LeaderboardEntry {
   streakDays: number;
   favoriteGameSlug: string;
   favoriteGameName: string;
-}
-
-export interface ResponseMeta {
-  totalItems: number;
-  description: string;
-}
-
-export interface ApiResponse<T> {
-  data: T;
-  meta: ResponseMeta;
 }
