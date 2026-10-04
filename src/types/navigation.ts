@@ -1,9 +1,11 @@
 import type { IconName } from '../components/icon/icon';
+import type { PageName } from './routes';
 
 export interface NavLink {
   label: string;
   href: string;
-  isCurrent?: boolean;
+  // The page this link opens, used to mark the active link
+  page?: PageName;
 }
 
 export interface FooterColumn {

@@ -1,9 +1,10 @@
 import './hero.scss';
-import { buttonHtml, ButtonSize } from '../../components/button/button';
+import { ButtonSize, linkButtonHtml } from '../../components/button/button';
 import {
   responsiveTextHtml,
   ShortTextFrom,
 } from '../../components/responsive-text/responsive-text';
+import { AppRoute } from '../../types/routes';
 
 const DESCRIPTION =
   'Discover hundreds of curated casual mini-games. Play instantly in your browser — puzzle, match 3, farm, and board classics.';
@@ -18,8 +19,9 @@ export function heroHtml(): string {
           <p class="hero__text">
             ${responsiveTextHtml(DESCRIPTION, DESCRIPTION_SHORT, ShortTextFrom.Mobile)}
           </p>
-          ${buttonHtml({
+          ${linkButtonHtml({
             text: 'Browse Library',
+            href: AppRoute.Library,
             size: ButtonSize.Large,
             className: 'hero__button',
           })}

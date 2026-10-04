@@ -72,7 +72,7 @@
       color: var(--color-primary);
     }
 
-    &--current {
+    &[aria-current='page'] {
       font-weight: var(--font-weight-bold);
       color: var(--color-primary);
     }
